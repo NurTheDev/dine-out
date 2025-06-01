@@ -6,7 +6,6 @@ import OrderReport from "./component/OrderReport.jsx";
 
 function App() {
     const [orders, setOrders] = useState([]);
-    console.log("Orders:", orders);
     return (
         <div className="text-white bg-background">
             <div className={"container mx-auto px-4 h-screen flex flex-col"}><Navbar/>
