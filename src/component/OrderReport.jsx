@@ -37,9 +37,9 @@ const OrderReport = ({orders}) => {
                         </tr>
                         </thead>
                         <tbody className="text-sm">
-                        {orders.map((order) => (
+                        {orders.map((order, index) => (
                             <tr className="border-t border-gray-700">
-                                <td className="py-3">{order.length}</td>
+                                <td className="py-3">{index + 1}</td>
                                 <td className="py-3">{order.customerName}</td>
                                 <td className="py-3">{order.items.length}</td>
                                 <td className="py-3">{order.totalPrice}</td>
@@ -49,7 +49,7 @@ const OrderReport = ({orders}) => {
                                         className="bg-gray-800 hover:bg-red-600 text-xs px-3 py-1 rounded-full mr-1 transition-colors duration-300">Delete
                                     </button>
                                     <button
-                                        class="bg-gray-800 hover:bg-green-600 text-xs px-3 py-1 rounded-full transition-colors duration-300">DELIVER
+                                        className="bg-gray-800 hover:bg-green-600 text-xs px-3 py-1 rounded-full transition-colors duration-300">DELIVER
                                     </button>
 
                                 </td>
