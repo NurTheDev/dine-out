@@ -18,19 +18,34 @@ const CreateOrder = ({onOrder}) => {
                         ...prevOrders,
                         {
                             id: value.id,
-                            customerName: inputValue,
-                            items: [value],
-                            totalPrice: totalPrice,
-                            status: "pending",
-                            createdAt: new Date().toLocaleString(),
+                            price: value.price,
+                            foodName: value.name,
+                            icon: value.icon || "",
                         },
                     ];
                 });
             }
-
         }
     };
-    console.log(orders);
+    const handleOrderSubmit = (e) => {
+        e.preventDefault();
+        if (orders.length === 0) {
+            alert("Please select at least one item to place an order.");
+            return;
+        }
+        const newOrder = {
+            id: crypto.randomUUID(),
+            customerName: inputValue,
+            items: orders,
+            status: "pending",
+            totalPrice: totalPrice,
+            createdAt: new Date().toLocaleString(),
+        };
+        onOrder((prevOrders) => [...prevOrders, newOrder]);
+        setInputValue("");
+        setOrders([]);
+        setTotalPrice(0);
+    };
     return (
         <div className={"bg-cardbg rounded-lg p-6 h-[calc(100vh_-_130px)]"}>
             <SearchOrder onInputValueChange={setInputValue}/>
@@ -73,7 +88,7 @@ const CreateOrder = ({onOrder}) => {
 
                 </div>
             </div>
-            <button
+            <button onClick={handleOrderSubmit}
                 className="w-full bg-primary hover:bg-opacity-90 text-white font-medium py-3 rounded-full transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1">
                 Place Order (BDT {totalPrice})
             </button>
