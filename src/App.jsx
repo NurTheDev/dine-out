@@ -9,10 +9,12 @@ function App() {
     const handleOrderChange = (value) => {
         if(value) {
             const ordertoChange = orders.find((order) => order.id === value);
-            console.log("Order to delete:", ordertoChange);
+            // ordertoChange is the order that we want to change
             if (ordertoChange) {
                 const updatedOrders = orders.filter((order) => order.id !== value);
                 setOrders(updatedOrders);
+
+                // If the order is pending, we delete it
                 const isDelivered = ordertoChange.status === "delivered";
                 if (isDelivered) {
                     alert("Order already delivered.");
@@ -21,7 +23,15 @@ function App() {
                     setOrders((prevOrders) => [...prevOrders, ordertoChange]);
                 }
             }
-
+            if(value.toLowerCase() === "all") {
+                setOrders(orders);
+            } else if(value.toLowerCase() === "pending") {
+                const pendingOrders = orders.filter((order) => order.status === "pending");
+                setOrders(pendingOrders);
+            } else if(value.toLowerCase() === "delivered") {
+                const deliveredOrders = orders.filter((order) => order.status === "delivered");
+                setOrders(deliveredOrders);
+            }
         }
     }
     return (
