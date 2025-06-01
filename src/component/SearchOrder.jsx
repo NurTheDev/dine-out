@@ -1,7 +1,6 @@
 import React from 'react';
 
-const SearchOrder = ({onInputValueChange , error }) => {
-    const [inputValue, setInputValue] = React.useState("");
+const SearchOrder = ({onInputValueChange , error, inputValue }) => {
     return (
         <div>
             <h2 className="text-xl font-bold mb-1">CREATE ORDER</h2>
@@ -11,11 +10,10 @@ const SearchOrder = ({onInputValueChange , error }) => {
             <div className="mb-4">
                 <label className="block text-sm font-medium mb-2">Customer Name</label>
                 <input type="text" onChange={(e) => {
-                    setInputValue(e.target.value);
-                    onInputValueChange(inputValue);
-                }} value={error ? inputValue : ""}
+                    onInputValueChange(e.target.value);
+                }} value={inputValue}
                        className="w-full bg-gray-700 bg-opacity-50 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-300"/>
-                {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+                {!inputValue && <p className="text-red-500 text-sm mt-1">{error}</p>}
             </div>
         </div>
     );

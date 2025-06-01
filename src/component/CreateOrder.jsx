@@ -51,10 +51,11 @@ const CreateOrder = ({onOrder}) => {
         setOrders([]);
         setTotalPrice(0);
         setError("");
+        setInputValue("");
     };
     return (
         <div className={"bg-cardbg rounded-lg p-6 h-[calc(100vh_-_130px)]"}>
-            <SearchOrder onInputValueChange={setInputValue} error={error}/>
+            <SearchOrder onInputValueChange={setInputValue} error={error} inputValue={inputValue}/>
             {/*Choose Items*/}
             <div className="mb-4">
                 <label className="block text-sm font-medium mb-2">Choose Items</label>
