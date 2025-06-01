@@ -1,6 +1,31 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
-const OrderSummary = ({orders = [], orderData}) => {
+const OrderSummary = ({orders = []}) => {
+
+    const [orderData, setOrderData] = useState({
+        totalItems: 0,
+        pendingOrders: 0,
+        deliveredOrders: 0,
+    });
+    useEffect(() => {
+        let totalItems = 0;
+        let pendingOrders = 0;
+        let deliveredOrders = 0;
+        orders.forEach((order) => {
+            totalItems += order.items.length;
+            if (order.status === "pending") {
+                pendingOrders++;
+            } else if (order.status === "delivered") {
+                deliveredOrders++;
+            }
+        });
+        setOrderData({
+            totalItems,
+            pendingOrders,
+            deliveredOrders,
+        });
+    }, [orders]);
+    // console.log("Order Data:", orders);
     return (
         <div>
             <h2 className="text-xl font-bold mb-4">Order Summary</h2>

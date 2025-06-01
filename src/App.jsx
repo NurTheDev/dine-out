@@ -6,10 +6,8 @@ import OrderReport from "./component/OrderReport.jsx";
 
 function App() {
     const [orders, setOrders] = useState([]);
-    const [orderData, setOrderData] = useState(0);
-    const handleOrdersChange = (newOrders, orderData) => {
+    const handleOrdersChange = (newOrders) => {
         setOrders(newOrders);
-        setOrderData(orderData);
     };
     return (
         <div className="text-white bg-background">
@@ -17,7 +15,7 @@ function App() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 flex-grow">
                     <CreateOrder onOrder={handleOrdersChange}/>
                     <div className={"md:col-span-2 h-[calc(100vh_-_130px)]"}>
-                        <OrderSummary orders={orders} orderData={orderData}/>
+                        <OrderSummary orders={orders}/>
                         <OrderReport/>
                     </div>
                 </div>

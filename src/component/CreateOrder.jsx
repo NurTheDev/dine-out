@@ -5,29 +5,32 @@ const CreateOrder = ({onOrder}) => {
     const [inputValue, setInputValue] = useState("");
     const [orders, setOrders] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
-    const [totalItems, setTotalItems] = useState(1);
     const handleOrderChange = (value) => {
-        setTotalPrice(totalPrice + value.price);
-        setTotalItems(totalItems + 1);
-        const orderData = {
-            totalPrice: totalPrice + value.price,
-            totalItems: totalItems,
+        if(value){
+            if(orders.find((order) => order.id === value.id)){
+                setTotalPrice((prevValue)=> prevValue - value.price);
+                const finalOrder = orders.filter((order)=> order.id !== value.id);
+                setOrders(finalOrder);
+            }else {
+                setTotalPrice((prevValue) => prevValue + value.price);
+                setOrders((prevOrders) => {
+                    return [
+                        ...prevOrders,
+                        {
+                            id: value.id,
+                            customerName: inputValue,
+                            items: [value],
+                            totalPrice: totalPrice,
+                            status: "pending",
+                            createdAt: new Date().toLocaleString(),
+                        },
+                    ];
+                });
+            }
+
         }
-        setOrders((prevOrders) => {
-            return [
-                ...prevOrders,
-                {
-                    id: value.id,
-                    customerName: inputValue,
-                    items: [value],
-                    totalPrice: totalPrice,
-                    status: "pending",
-                    createdAt: new Date().toLocaleString(),
-                },
-            ];
-        });
-        onOrder(orders, orderData);
     };
+    console.log(orders);
     return (
         <div className={"bg-cardbg rounded-lg p-6 h-[calc(100vh_-_130px)]"}>
             <SearchOrder onInputValueChange={setInputValue}/>
@@ -49,12 +52,21 @@ const CreateOrder = ({onOrder}) => {
                             </div>
                             <button onClick={()=> handleOrderChange(item)}
                                 className="w-8 h-8 bg-gray-800 hover:bg-primary rounded-full flex items-center justify-center transition-colors duration-300 cursor-pointer">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-500"
-                                     viewBox="0 0 20 20" fill="currentColor">
-                                    <path fillRule="evenodd"
-                                          d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                                          clipRule="evenodd"/>
-                                </svg>
+                                {orders.find((order) => order.id === item.id) ? (
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-red-500"
+                                         viewBox="0 0 20 20"
+                                         fill="currentColor">
+                                        <path fillRule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                              clipRule="evenodd"/>
+                                    </svg>
+                                ) : (
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-500"
+                                         viewBox="0 0 20 20" fill="currentColor">
+                                        <path fillRule="evenodd"
+                                              d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                              clipRule="evenodd"/>
+                                    </svg>
+                                )}
                             </button>
                         </div>
                     ))}
