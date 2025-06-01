@@ -1,6 +1,7 @@
 import React from 'react';
 
-const OrderReport = () => {
+const OrderReport = ({orders}) => {
+    console.log(orders)
     return (
         // Order Reports
     <div>
@@ -36,19 +37,21 @@ const OrderReport = () => {
                         </tr>
                         </thead>
                         <tbody className="text-sm">
-                        <tr className="border-t border-gray-700">
-                            <td className="py-3">21</td>
-                            <td className="py-3">Akash Ahmed</td>
-                            <td className="py-3">5</td>
-                            <td className="py-3">123123</td>
-                            <td className="py-3"><span className="text-green-500">DELIVERED</span></td>
-                            <td className="py-3">
-                                <button
-                                    className="bg-gray-800 hover:bg-red-600 text-xs px-3 py-1 rounded-full mr-1 transition-colors duration-300">Delete
-                                </button>
+                        {orders.map((order) => (
+                            <tr className="border-t border-gray-700">
+                                <td className="py-3">{order.length}</td>
+                                <td className="py-3">{order.customerName}</td>
+                                <td className="py-3">{order.items.length}</td>
+                                <td className="py-3">{order.totalPrice}</td>
+                                <td className="py-3"><span className="text-green-500">{order.status}</span></td>
+                                <td className="py-3">
+                                    <button
+                                        className="bg-gray-800 hover:bg-red-600 text-xs px-3 py-1 rounded-full mr-1 transition-colors duration-300">Delete
+                                    </button>
 
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                        ))}
                         </tbody>
                     </table>
                 </div>

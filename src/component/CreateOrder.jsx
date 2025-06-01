@@ -5,6 +5,7 @@ const CreateOrder = ({onOrder}) => {
     const [inputValue, setInputValue] = useState("");
     const [orders, setOrders] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
+    const [error, setError] = useState("");
     const handleOrderChange = (value) => {
         if(value){
             if(orders.find((order) => order.id === value.id)){
@@ -33,6 +34,10 @@ const CreateOrder = ({onOrder}) => {
             alert("Please select at least one item to place an order.");
             return;
         }
+        if (inputValue.trim() === "") {
+            setError("Please enter a customer name.");
+            return;
+        }
         const newOrder = {
             id: crypto.randomUUID(),
             customerName: inputValue,
@@ -45,10 +50,11 @@ const CreateOrder = ({onOrder}) => {
         setInputValue("");
         setOrders([]);
         setTotalPrice(0);
+        setError("");
     };
     return (
         <div className={"bg-cardbg rounded-lg p-6 h-[calc(100vh_-_130px)]"}>
-            <SearchOrder onInputValueChange={setInputValue}/>
+            <SearchOrder onInputValueChange={setInputValue} error={error}/>
             {/*Choose Items*/}
             <div className="mb-4">
                 <label className="block text-sm font-medium mb-2">Choose Items</label>

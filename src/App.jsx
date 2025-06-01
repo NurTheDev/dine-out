@@ -13,7 +13,7 @@ function App() {
                     <CreateOrder onOrder={setOrders}/>
                     <div className={"md:col-span-2 h-[calc(100vh_-_130px)]"}>
                         <OrderSummary orders={orders}/>
-                        <OrderReport/>
+                        <OrderReport orders={orders}/>
                     </div>
                 </div>
             </div>
